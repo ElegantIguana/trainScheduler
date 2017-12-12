@@ -79,5 +79,6 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	//finally display data to the DOM
 	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextArrival + "</td><td>" + minUntil + "</td></tr>");
 
+//done
 });
 });
