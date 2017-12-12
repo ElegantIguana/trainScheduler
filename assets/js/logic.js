@@ -57,7 +57,27 @@ $(document).ready(function() {
 
   }); //end of onclick event
 
+database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
+	console.log(childSnapshot.val());
+	//store input in variables
+	var trainName = childSnapshot.val().train;
+	var destination = childSnapshot.val().trainGoing;
+	var firstTime = childSnapshot.val().trainComing;
+	var frequency = childSnapshot.val().everyXMin;
 
+	//cleaning up data format
+	var trainTime = moment.unix(firstTime).format("hh:mm");
+	//calculates the diff between times
+	var difference = moment().diff(moment(trainTime), "minutes");
 
+	var trainRemain = difference % frequency;
+
+	var minUntil = frequency - trainRemain;
+	var nextArrival = moment().add(minUntil, "minutes").format("hh:mm");
+
+	//finally display data to the DOM
+	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextArrival + "</td><td>" + minUntil + "</td></tr>");
+
+});
 });
